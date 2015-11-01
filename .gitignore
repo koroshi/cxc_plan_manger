@@ -1,3 +1,4 @@
 /cxc_plan_manger/node_modules
 .vscode
 /cxc_plan_manger/dist/*
+/typings

@@ -6,16 +6,13 @@
     <!-- build:js js/lib.js -->
     <script src="../public/javascripts/build/react.min.js"></script>
 	  <script src="../public/javascripts/build/react-dom.min.js"></script>
-    <script src="../public/javascripts/build/JSXTransformer.js"></script>
+    <!--<script src="../public/javascripts/build/JSXTransformer.js"></script>-->
     <!-- endbuild -->
   </head>
   <body>
     <div id="example"></div>
-    <script type="text/jsx">
-      React.render(
-        <h1>Hello, world!</h1>,
-        document.getElementById('example')
-      );
-    </script>
+    <!-- build:reactjs js/app.js -->
+    <script src="../public/javascripts/app.jsx" type="text/jsx"></script>
+    <!-- endbuild -->
   </body>
 </html>

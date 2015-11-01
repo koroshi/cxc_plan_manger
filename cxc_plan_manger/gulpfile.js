@@ -2,6 +2,7 @@ var yargs = require('yargs').argv;
 var gulp = require('gulp');
 var clean = require('gulp-clean');
 var usemin = require('gulp-usemin');
+var react = require('gulp-react');
 // var minify = require('gulp-minify-css');
 // var rename = require('gulp-rename');
 // var sourcemaps = require('gulp-sourcemaps');
@@ -15,8 +16,8 @@ gulp.task('clean',function(){
 gulp.task('copy',function(){
     gulp.src('./views/index.html')
         .pipe(gulp.dest('./dist/views/'));
-    gulp.src('./public/javascripts/build/{react*min.js,JSXTransformer.js}')
-        .pipe(gulp.dest('./dist/public/javascripts/build/'));
+    // gulp.src('./public/javascripts/build/{react*min.js,JSXTransformer.js}')
+    //     .pipe(gulp.dest('./dist/public/javascripts/build/'));
     
 });
 
@@ -26,11 +27,13 @@ gulp.task('usemin', function() {
     .pipe(usemin({
     //   css: [ rev() ],
     //   html: [ minifyHtml({ empty: true }) ],
-    //   js: [ uglify(), rev() ],
+      js: [],
+      reactjs: [react()]
     //   inlinejs: [ uglify() ],
     //   inlinecss: [ minifyCss(), 'concat' ]
     }))
-    .pipe(gulp.dest('./dist/views/'));
+    .pipe(gulp.dest('./dist/views/'))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('server', function () {
@@ -49,6 +52,17 @@ gulp.task('server', function () {
     });
 });
 
+gulp.task('watch', function () {
+    gulp.watch('./public/javascripts/app.jsx', ['usemin'], function () {
+        browserSync.reload();
+    });
+    gulp.watch('./views/index.html', ['usemin'], function () {
+        browserSync.reload();
+    });
+});
+
+gulp.task('release', ['usemin']);
+
 
 // 参数说明
 //  -w: 实时监听
@@ -59,9 +73,9 @@ gulp.task('default', function () {
         gulp.start('server');
     }
     if (yargs.w) {
-        // gulp.start('release');
-        // gulp.start('watch');
+        gulp.start('release');
+        gulp.start('watch');
     } else {
-        // gulp.start('release');
+        gulp.start('release');
     }
 });
